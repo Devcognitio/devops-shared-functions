@@ -1,5 +1,5 @@
 def call(script) {
     node {
-        sh resources/bdshell.sh ${script}
+        sh libraryResource("bdshell.sh") ${script}
     }
 }
