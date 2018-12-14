@@ -1,7 +1,5 @@
 def call(script) {
     node {
-        def function = libraryResource("bdshell.sh")
-        writeFile file: 'bdshell.sh', text: function
-        sh "bdshell.sh ${script}"
+        sh "cat ${script} | sqlcmd -s localhost -u sa -p Admin2018 -o 1433"
     }
 }
