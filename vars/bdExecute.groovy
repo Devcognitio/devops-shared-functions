@@ -1,5 +1,7 @@
 def call(script) {
     node {
-        sh(script: libraryResource("bdshell.sh"), fileParam: script)
+        def function = libraryResource("bdshell.sh")
+        writeFile file: 'bdshell.sh', text: function
+        sh "bdshell.sh ${script}"
     }
 }
