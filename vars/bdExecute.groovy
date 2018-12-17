@@ -1,13 +1,13 @@
 import groovy.io.FileType
 
-def call(script) {
+def call(directoryPath) {
     node {
         withCredentials([usernamePassword(credentialsId: 'SQL_SERVER_CREDENTIALS',
                                           usernameVariable: 'USERNAME',
                                           passwordVariable: 'PASSWORD')]) {
-            def dir = new File("/Users/jenniferperezbedoya/Documents/proyectos/ICProjects/jenkins/ServicioBase/bd")
+            def dir = new File(directoryPath)
             dir.eachFileRecurse (FileType.FILES) { file ->
-                sh "cat ${file} | sqlcmd -s localhost -u $USERNAME -p $PASSWORD -o 1433"
+                sh "cat ${file} | sqlcmd -s localhost -u $USERNAME -p $PASSWORD"
             }
         }
     }
