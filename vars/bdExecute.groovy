@@ -1,5 +1,9 @@
 def call(script) {
     node {
-        sh "cat ${script} | sqlcmd -s localhost -u sa -p Admin2018 -o 1433"
+        withCredentials([usernamePassword(credentialsId: 'bd-credenciales-desa',
+                                          usernameVariable: 'USERNAME',
+                                          passwordVariable: 'PASSWORD')]) {
+            sh "cat ${script} | sqlcmd -s localhost -u $USERNAME -p $PASSWORD -o 1433"
+        }
     }
 }
