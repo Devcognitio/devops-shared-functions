@@ -2,7 +2,7 @@ import groovy.io.FileType
 
 def call(directoryPath) {
     node {
-        unstash 'artifact'
+        unstash 'bd'
         withCredentials([usernamePassword(credentialsId: 'SQL_SERVER_CREDENTIALS',
                                           usernameVariable: 'USERNAME',
                                           passwordVariable: 'PASSWORD')]) {
