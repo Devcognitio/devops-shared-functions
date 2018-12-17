@@ -1,8 +1,6 @@
 import groovy.io.FileType
 
 def call(directoryPath) {
-    node {
-        unstash 'bd'
         withCredentials([usernamePassword(credentialsId: 'SQL_SERVER_CREDENTIALS',
                                           usernameVariable: 'USERNAME',
                                           passwordVariable: 'PASSWORD')]) {
@@ -13,5 +11,4 @@ def call(directoryPath) {
                 sh "cat ${file} | sqlcmd -s localhost -u $USERNAME -p $PASSWORD"
             }
         }
-    }
 }
