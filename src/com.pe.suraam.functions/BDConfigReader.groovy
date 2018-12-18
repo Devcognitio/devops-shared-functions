@@ -5,10 +5,12 @@ import groovy.json.JsonSlurper
 
 class BDConfigReader {
 
-    static def readConfigFile(jsonPath) {
-        def inputFile = new File("${jsonPath}")
+    static def readConfigFile(script, jsonPath) {
+       // def inputFile = new File("${jsonPath}")
+        script.sh "pwd"
+       // echo "${inputFile}"
        // return new JsonSlurper().parseText(inputFile.text) as ConfigFile
-        return new JsonSlurper().parseText(inputFile.text)
+        //return new JsonSlurper().parseText(inputFile.text)
     }
 
 }
