@@ -6,9 +6,11 @@ def call(scriptsPath, configFilePath) {
                                       usernameVariable: 'USERNAME',
                                       passwordVariable: 'PASSWORD')]) {
         def workspacePath = pwd()
+        def dir
+        def config
         try {
-            def dir = new File("${workspacePath}" + "${scriptsPath}")
-            def config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
+            dir = new File("${workspacePath}" + "${scriptsPath}")
+            config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
         } catch(FileNotFoundException exc) {
             throw new FileNotFoundException("BD Scripts path, configuration file path or both are incorrect, please verify that exists and are not null", exc.getMessage())
         }
