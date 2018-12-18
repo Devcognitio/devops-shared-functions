@@ -3,7 +3,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import com.pe.suraam.functions.BDConfigReader
 
-final Logger logger = LoggerFactory.getLogger("devops-shared-functions-log")
+def Logger logger = LoggerFactory.getLogger("devops-shared-functions-log")
 
 def call(scriptsPath, configFilePath) {
     withCredentials([usernamePassword(credentialsId: 'SQL_SERVER_CREDENTIALS',
