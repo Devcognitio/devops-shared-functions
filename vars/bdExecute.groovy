@@ -12,7 +12,7 @@ def call(directoryPath) {
         def config = BDConfigReader.readConfigFile("../config.json")
 
         //BDConfigReader.readConfigFile(this,"../config.json")
-       // echo("CONFIG FILE: ${config.skipExecution}")
+        echo("CONFIG FILE: ${config.skipExecution}")
         dir.eachFileRecurse (FileType.FILES) { file ->
             sh "cat ${file} | sqlcmd -s localhost -u $USERNAME -p $PASSWORD"
         }
