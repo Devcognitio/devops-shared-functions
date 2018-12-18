@@ -1,7 +1,7 @@
-package main.com.pe.suraam.functions
+package com.pe.suraam.functions
 
 import groovy.json.JsonSlurper
-import main.com.pe.suraam.model.*
+import com.pe.suraam.model.*
 
 class BDConfigReader {
 
