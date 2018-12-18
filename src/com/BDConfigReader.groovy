@@ -1,5 +1,5 @@
 
-package x
+package com
 
 //import groovy.json.JsonSlurper
 
