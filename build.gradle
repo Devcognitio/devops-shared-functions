@@ -8,6 +8,14 @@ version '1.0-BETA'
 
 sourceCompatibility = 1.8
 
+sourceSets {
+    test {
+        groovy {
+            srcDirs = ['test/']
+        }
+    }
+}
+
 repositories {
     mavenCentral()
 }
