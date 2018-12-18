@@ -1,7 +1,9 @@
 import groovy.io.FileType
-
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import com.pe.suraam.functions.BDConfigReader
-import com.pe.suraam.exceptions.*
+
+final Logger logger = LoggerFactory.getLogger("devops-shared-functions-log")
 
 def call(scriptsPath, configFilePath) {
     withCredentials([usernamePassword(credentialsId: 'SQL_SERVER_CREDENTIALS',
@@ -12,7 +14,7 @@ def call(scriptsPath, configFilePath) {
             def dir = new File("${workspacePath}" + "${scriptsPath}")
             def config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
         } catch(FileNotFoundException exc) {
-            throw new com.pe.suraam.exceptions.BDScriptsExecutionException("BD Scripts path, configuration file path or both are incorrect, please verify that exists and are not null")
+            logger.error("BD Scripts path, configuration file path or both are incorrect, please verify that exists and are not null")
         }
         echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
         if(!config.skipExecution) {
