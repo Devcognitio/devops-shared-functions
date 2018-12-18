@@ -1,15 +1,15 @@
 
 package com.pe.suraam.functions
 
-//import groovy.json.JsonSlurper
+import groovy.json.JsonSlurper
 
 class BDConfigReader {
 
-def static readConfigFile(script, jsonPath) {
-       // def inputFile = new File("${jsonPath}")
-    script.echo("Desde BDConfigReader")
+ def static ConfigFile readConfigFile(script, jsonPath) {
+        def inputFile = new File("${jsonPath}")
+        script.echo("Desde BDConfigReader")
         script.sh "pwd"
-       // echo "${inputFile}"
+        echo "${inputFile}"
        // return new JsonSlurper().parseText(inputFile.text) as ConfigFile
         //return new JsonSlurper().parseText(inputFile.text)
     }
