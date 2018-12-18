@@ -8,13 +8,13 @@ def call(scriptsPath, configFilePath) {
                                       passwordVariable: 'PASSWORD')]) {
         def workspacePath = pwd()
         def dir = new File("${workspacePath}" + "${scriptsPath}")
-        //def dir = new File("${directoryPath}")
         def config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
-
-        //BDConfigReader.readConfigFile(this,"../config.json")
-        echo("CONFIG FILE: ${config.skipExecution}")
-        dir.eachFileRecurse (FileType.FILES) { file ->
-            sh "cat ${file} | sqlcmd -s localhost -u $USERNAME -p $PASSWORD"
+        echo("CONFIG FILE SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
+        echo(getClass().getResourceAsStream("/config.json"))
+        if(!config.skipExecution) {
+            dir.eachFileRecurse (FileType.FILES) { file ->
+                sh "cat ${file} | sqlcmd -s localhost -u $USERNAME -p $PASSWORD"
+            }
         }
     }
 }
