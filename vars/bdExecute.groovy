@@ -6,7 +6,8 @@ def call(directoryPath) {
                                           passwordVariable: 'PASSWORD')]) {
             sh "pwd"
             sh "ls"
-            def dir = new File(directoryPath)
+            def workspacePath = sh 'pwd'
+            def dir = new File(workspacePath + directoryPath)
             dir.eachFileRecurse (FileType.FILES) { file ->
                 sh "cat ${file} | sqlcmd -s localhost -u $USERNAME -p $PASSWORD"
             }
