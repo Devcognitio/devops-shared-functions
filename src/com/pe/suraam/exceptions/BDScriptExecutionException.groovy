@@ -1,15 +1,8 @@
 package com.pe.suraam.exceptions
 
+import groovy.transform.InheritConstructors
+
+@InheritConstructors
 class BDScriptExecutionException extends Exception {
-
-    BDScriptExecutionException() { }
-
-    BDScriptExecutionException(String message) {
-        super(message)
-    }
-
-    BDScriptExecutionException(String message, Throwable cause) {
-        super(message, cause)
-    }
 
 }
