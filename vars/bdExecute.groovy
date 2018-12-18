@@ -12,7 +12,7 @@ def call(scriptsPath, configFilePath) {
             def dir = new File("${workspacePath}" + "${scriptsPath}")
             def config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
         } catch(FileNotFoundException exception) {
-            throw new BDScriptsExecutionException("BD Scripts path, configuration file path or both are incorrect, please verify that exists and are not null", exception.getCause())
+            throw new BDScriptsExecutionException("BD Scripts path, configuration file path or both are incorrect, please verify that exists and are not null", exception.getMessage())
         }
         echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
         if(!config.skipExecution) {
