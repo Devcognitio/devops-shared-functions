@@ -7,6 +7,7 @@ package x
 
 def readConfigFile(script, jsonPath) {
        // def inputFile = new File("${jsonPath}")
+    script.echo("Desde BDConfigReader")
         script.sh "pwd"
        // echo "${inputFile}"
        // return new JsonSlurper().parseText(inputFile.text) as ConfigFile

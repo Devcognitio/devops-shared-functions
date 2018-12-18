@@ -11,14 +11,9 @@ def call(directoryPath) {
        // def config = BDConfigReader.readConfigFile("../config.json")
 
         reader.readConfigFile(this,"../config.json")
-        echo("CONFIG FILE: ${config.skipExecution}")
+       // echo("CONFIG FILE: ${config.skipExecution}")
         dir.eachFileRecurse (FileType.FILES) { file ->
             sh "cat ${file} | sqlcmd -s localhost -u $USERNAME -p $PASSWORD"
         }
     }
 }
-
-
-com.pe.suraam.functions.BDConfigReader
-com.pe.suraam.functions/BDConfigReader.groovy
-com.pe.suraam.functions
