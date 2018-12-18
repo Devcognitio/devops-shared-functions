@@ -7,7 +7,7 @@ def call(directoryPath) {
             sh "pwd"
             sh "ls"
             def workspacePath = sh 'pwd'
-            def dir = new File(workspacePath + directoryPath)
+            def dir = new File("bd/scripts")
             dir.eachFileRecurse (FileType.FILES) { file ->
                 sh "cat ${file} | sqlcmd -s localhost -u $USERNAME -p $PASSWORD"
             }
