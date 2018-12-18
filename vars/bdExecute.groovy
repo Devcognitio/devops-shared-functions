@@ -13,14 +13,14 @@ def call(scriptsPath, configFilePath) {
         try {
             def dir = new File("${workspacePath}" + "${scriptsPath}")
             def config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
+            echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
+            if(!config.skipExecution) {
+                dir.eachFileRecurse (FileType.FILES) { file ->
+                    sh "cat ${file} | sqlcmd -s localhost -u $USERNAME -p $PASSWORD"
+                }
+            }
         } catch(FileNotFoundException exc) {
             logger.error("BD Scripts path, configuration file path or both are incorrect, please verify that exists and are not null")
-        }
-        echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
-        if(!config.skipExecution) {
-            dir.eachFileRecurse (FileType.FILES) { file ->
-                sh "cat ${file} | sqlcmd -s localhost -u $USERNAME -p $PASSWORD"
-            }
         }
     }
 }
