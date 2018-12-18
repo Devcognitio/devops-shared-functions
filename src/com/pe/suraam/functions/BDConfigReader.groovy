@@ -3,9 +3,9 @@ package com.pe.suraam.functions
 
 //import groovy.json.JsonSlurper
 
-//class BDConfigReader {
+class BDConfigReader {
 
-def readConfigFile(script, jsonPath) {
+def static readConfigFile(script, jsonPath) {
        // def inputFile = new File("${jsonPath}")
     script.echo("Desde BDConfigReader")
         script.sh "pwd"
@@ -14,6 +14,6 @@ def readConfigFile(script, jsonPath) {
         //return new JsonSlurper().parseText(inputFile.text)
     }
 
-return this
+//return this
 
-//}
+}
