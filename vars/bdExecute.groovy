@@ -16,3 +16,8 @@ def call(directoryPath) {
         }
     }
 }
+
+
+com.pe.suraam.functions.BDConfigReader
+com.pe.suraam.functions/BDConfigReader.groovy
+com.pe.suraam.functions
