@@ -1,6 +1,7 @@
 import groovy.io.FileType
 
 def call(directoryPath) {
+    def reader = new com.pe.suraam.functions.BDConfigReader()
     withCredentials([usernamePassword(credentialsId: 'SQL_SERVER_CREDENTIALS',
                                       usernameVariable: 'USERNAME',
                                       passwordVariable: 'PASSWORD')]) {
@@ -8,7 +9,7 @@ def call(directoryPath) {
         //def dir = new File("${workspacePath}" + "${directoryPath}")
         def dir = new File("${directoryPath}")
        // def config = BDConfigReader.readConfigFile("../config.json")
-        def reader = new com.pe.suraam.functions.BDConfigReader()
+
         reader.readConfigFile(this,"../config.json")
         echo("CONFIG FILE: ${config.skipExecution}")
         dir.eachFileRecurse (FileType.FILES) { file ->
