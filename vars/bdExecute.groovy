@@ -6,8 +6,8 @@ def call(directoryPath) {
                                           passwordVariable: 'PASSWORD')]) {
             sh "pwd"
             sh "ls"
-            def workspacePath = sh 'pwd'
-            def dir = new File("/Users/jenniferperezbedoya/.jenkins/workspace/vicioBase_jennifers-feature-ZEELFDI7BN7A3AAPVNHISVJVERJ7OLHTGQS4JZX23YBYW5EEWYPA/bd/scripts")
+            def workspacePath = pwd()
+            def dir = new File("${workspacePath}" + "${directoryPath}")
             dir.eachFileRecurse (FileType.FILES) { file ->
                 sh "cat ${file} | sqlcmd -s localhost -u $USERNAME -p $PASSWORD"
             }
