@@ -2,14 +2,14 @@ import groovy.io.FileType
 
 import com.pe.suraam.functions.BDConfigReader
 
-def call(directoryPath) {
+def call(scriptsPath) {
     withCredentials([usernamePassword(credentialsId: 'SQL_SERVER_CREDENTIALS',
                                       usernameVariable: 'USERNAME',
                                       passwordVariable: 'PASSWORD')]) {
         def workspacePath = pwd()
-        def dir = new File("${workspacePath}" + "${directoryPath}")
+        def dir = new File("${workspacePath}" + "${scriptsPath}")
         //def dir = new File("${directoryPath}")
-        def config = BDConfigReader.readConfigFile("../config.json")
+        def config = BDConfigReader.readConfigFile()
 
         //BDConfigReader.readConfigFile(this,"../config.json")
         echo("CONFIG FILE: ${config.skipExecution}")
