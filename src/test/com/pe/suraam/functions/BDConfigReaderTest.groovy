@@ -1,4 +1,4 @@
-package com.pe.suraam.functions
+package test.com.pe.suraam.functions
 
 import groovy.json.JsonSlurper
 import org.junit.Test
