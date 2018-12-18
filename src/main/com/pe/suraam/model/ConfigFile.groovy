@@ -1,4 +1,4 @@
-package com.pe.suraam.functions
+package main.com.pe.suraam.functions
 
 class ConfigFile {
 
