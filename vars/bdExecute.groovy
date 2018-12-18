@@ -1,7 +1,7 @@
 import groovy.io.FileType
 
 def call(directoryPath) {
-    def reader = new com.pe.BDConfigReader()
+    def reader = new com.pe.suraam.functions.BDConfigReader()
     withCredentials([usernamePassword(credentialsId: 'SQL_SERVER_CREDENTIALS',
                                       usernameVariable: 'USERNAME',
                                       passwordVariable: 'PASSWORD')]) {
