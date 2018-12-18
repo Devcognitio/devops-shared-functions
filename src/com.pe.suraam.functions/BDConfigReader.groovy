@@ -1,4 +1,4 @@
-#!/usr/bin/groovy
+
 package com.pe.suraam.functions
 
 import groovy.json.JsonSlurper
