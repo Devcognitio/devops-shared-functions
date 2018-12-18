@@ -7,7 +7,7 @@ class BDConfigReader {
 
   static ConfigFile readConfigFile() {
         def stream = getClass().getResourceAsStream("/config.json")
-        print(stream.text)
+        echo(stream.text)
         //def inputFile = new File("${jsonPath}")
         //script.echo("Desde BDConfigReader")
         //script.sh "pwd"
