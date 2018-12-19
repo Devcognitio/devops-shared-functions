@@ -46,7 +46,7 @@ class BDExecutor {
         if (!config.skipExecution) {
             dir.eachFileRecurse(FileType.FILES) { file ->
                 if (Files.exists(file.toPath())) {
-                    script.sh "cat ${file} | sqlcmd -s localhost -u $username -p $password"
+                    script.sh "cat ${file.toPath().toString()} | sqlcmd -s localhost -u $username -p $password"
                 } else {
                     script.echo("SCRIPT FILE -> BD SCRIPT DOES NOT EXIST" + ${file.toPath()})
                 }
