@@ -1,7 +1,6 @@
 package main.groovy.com.pe.suraam.functions
 
 import groovy.io.FileType
-import java.nio.file.*
 import main.groovy.com.pe.suraam.functions.BDConfigReader
 
 class BDExecutor {
@@ -23,23 +22,18 @@ class BDExecutor {
     void executeScripts() {
         //def workspacePath = script.pwd()
         def workspacePath = script.env.WORKSPACE
-        def path = "${workspacePath}${scriptsPath}"
-        script.echo("PATH ${path}")
-        def path2 = path.replace("\\", "/")
-        script.echo("PATH2 ${path2}")
-        def config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
+        def config = BDConfigReader.readConfigFile("${workspacePath}${configFilePath}")
         def dir
         try {
-            dir = new File(path)
+            dir = new File("${workspacePath}${scriptsPath}")
         } catch (FileNotFoundException exc) {
             throw new FileNotFoundException("BD Scripts path is incorrect, please provide a correct path. ", exc.getMessage())
         }
         script.echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
         if (!config.skipExecution) {
             dir.eachFileRecurse(FileType.FILES) { file ->
-                script.echo("SCRIPT FILE -> ${file.toPath()}")
-                def pa = file.toPath().toString().replace("\\", "\\\\")
-                script.sh "cat ${pa} | sqlcmd -s localhost -u $username -p $password"
+                def filePath = file.toPath().toString().replace("\\", "\\\\")
+                script.sh "cat ${filePath} | sqlcmd -s localhost -u $username -p $password"
             }
         }
     }
