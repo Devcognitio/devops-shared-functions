@@ -9,7 +9,13 @@ class BDConfigReaderTest {
 
     @Test(expected = IOException.class)
     void mustThrowFileNotFoundExceptionIfConfigFilePathDoesNotExist() {
-        BDConfigReader.readConfigFile("non/existing/path")
+        try {
+            BDConfigReader.readConfigFile("non/existing/path")
+            fail()
+        } catch(FileNotFoundException exc) {
+
+        }
+
     }
 
 
