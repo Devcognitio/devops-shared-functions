@@ -20,7 +20,9 @@ class BDExecutor {
     }
 
     void executeScripts() {
-        def workspacePath = pwd()
+        def workspacePath = script.pwd()
+        Path p5 = Paths.get(System.getProperty("user.home"))
+        script.echo(p5)
         def config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
         def dir
         try {
@@ -28,10 +30,10 @@ class BDExecutor {
         } catch (FileNotFoundException exc) {
             throw new FileNotFoundException("BD Scripts path is incorrect, please provide a correct path. ", exc.getMessage())
         }
-        echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
+        script.echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
         if (!config.skipExecution) {
             dir.eachFileRecurse(FileType.FILES) { file ->
-                sh "cat ${file} | sqlcmd -s localhost -u $username -p $password"
+                script.sh "cat ${file} | sqlcmd -s localhost -u $username -p $password"
             }
         }
     }
