@@ -22,6 +22,7 @@ class BDExecutor {
 
     void executeScripts() {
         def workspacePath = script.pwd()
+        script.sh "pwd"
         def p5 = Paths.get(System.getProperty("user.dir"))
         script.echo(p5.toString())
         script.echo(p5.toUri().toString())
