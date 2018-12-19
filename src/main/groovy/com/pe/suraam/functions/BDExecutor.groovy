@@ -39,7 +39,7 @@ class BDExecutor {
             dir.eachFileRecurse(FileType.FILES) { file ->
                 script.echo("SCRIPT FILE -> ${file.toPath()}")
                 def pa = file.toPath().toString().replace("\\", "\\\\")
-                script.sh "cat ${file.toPath()} | sqlcmd -s localhost -u $username -p $password"
+                script.sh "cat ${pa} | sqlcmd -s localhost -u $username -p $password"
             }
         }
     }
