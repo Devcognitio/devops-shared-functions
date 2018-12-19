@@ -23,6 +23,13 @@ class BDExecutor {
     void executeScripts() {
         def workspacePath = script.pwd()
         script.sh "pwd"
+        //   def p5 = Paths.get(System.getProperty("user.dir"))
+        // script.echo(p5.toString())
+        //script.echo(p5.toUri().toString())
+       // def pf = context.getAbsolutePathFile(".")
+        //script.echo(pf.getAbsolutePath())
+        def scriptDir = getClass().protectionDomain.codeSource.location.path
+        script.echo(scriptDir)
         def config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
         def dir
         try {
