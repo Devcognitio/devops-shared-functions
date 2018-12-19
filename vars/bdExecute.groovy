@@ -8,5 +8,4 @@ def call(scriptsPath, configFilePath) {
         bdExecutor.executeScripts()
     }
 
-
 }

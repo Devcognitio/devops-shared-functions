@@ -1,7 +1,6 @@
 package main.groovy.com.pe.suraam.functions
 
 import groovy.io.FileType
-import groovy.json.JsonSlurper
 import main.groovy.com.pe.suraam.functions.BDConfigReader
 
 class BDExecutor {
@@ -21,20 +20,19 @@ class BDExecutor {
     }
 
     void executeScripts() {
-            def workspacePath = script.pwd()
-            def dir
-            def config
-            try {
-                dir = new File("${workspacePath}" + "${scriptsPath}")
-                config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
-            } catch(FileNotFoundException exc) {
-                throw new FileNotFoundException("BD Scripts path, configuration file path or both are incorrect, please verify that exists and are not null", exc.getMessage())
+        def workspacePath = pwd()
+        def config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
+        def dir
+        try {
+            dir = new File("${workspacePath}" + "${scriptsPath}")
+        } catch (FileNotFoundException exc) {
+            throw new FileNotFoundException("BD Scripts path is incorrect, please provide a correct path. ", exc.getMessage())
+        }
+        echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
+        if (!config.skipExecution) {
+            dir.eachFileRecurse(FileType.FILES) { file ->
+                sh "cat ${file} | sqlcmd -s localhost -u $username -p $password"
             }
-            script.echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
-            if(!config.skipExecution) {
-                dir.eachFileRecurse (FileType.FILES) { file ->
-                    script.sh "cat ${file} | sqlcmd -s localhost -u $username -p $password"
-                }
-            }
+        }
     }
 }
