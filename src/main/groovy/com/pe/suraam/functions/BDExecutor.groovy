@@ -29,7 +29,7 @@ class BDExecutor {
        // def pf = context.getAbsolutePathFile(".")
         //script.echo(pf.getAbsolutePath())
         def workspacePath = script.env.WORKSPACE
-        def path = "${workspacePath} ${scriptsPath}"
+        def path = "${workspacePath}${scriptsPath}"
         script.echo("PATH ${path}")
         def path2 = path.replace("\\", "/")
         script.echo("PATH2 ${path2}")
@@ -38,7 +38,7 @@ class BDExecutor {
         def config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
         def dir
         try {
-            dir = new File("${workspacePath}" + "${scriptsPath}")
+            dir = new File(path)
         } catch (FileNotFoundException exc) {
             throw new FileNotFoundException("BD Scripts path is incorrect, please provide a correct path. ", exc.getMessage())
         }
