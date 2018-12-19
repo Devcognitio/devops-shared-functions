@@ -45,11 +45,8 @@ class BDExecutor {
         script.echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
         if (!config.skipExecution) {
             dir.eachFileRecurse(FileType.FILES) { file ->
-                if (Files.exists(file.toPath())) {
-                    script.sh "cat ${file.toPath().toString()} | sqlcmd -s localhost -u $username -p $password"
-                } else {
-                    script.echo("SCRIPT FILE -> BD SCRIPT DOES NOT EXIST" + ${file.toPath()})
-                }
+                  script.echo("SCRIPT FILE -> ${file.toPath()}")
+                    script.sh "cat ${file.toPath()} | sqlcmd -s localhost -u $username -p $password"
             }
         }
         script.echo("WORKSPACE ${script.env.WORKSPACE}")
