@@ -22,7 +22,8 @@ class BDExecutor {
 
     void executeScripts() {
         def workspacePath = script.pwd()
-        Path p5 = Paths.get(System.getProperty("user.home"))
+        def p5 = Paths.get(System.getProperty("user.home"))
+        script.echo(p5.toString())
         script.echo(p5.toUri().toString())
         def config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
         def dir
