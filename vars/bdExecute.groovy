@@ -6,6 +6,7 @@ def call(scriptsPath, configFilePath) {
                                       passwordVariable: 'PASSWORD')]) {
         def bdExecutor = new BDExecutor(this, scriptsPath, configFilePath, USERNAME, PASSWORD)
         bdExecutor.executeScripts()
+        echo("WORKSPACE ${env.WORKSPACE}")
     }
 
 }
