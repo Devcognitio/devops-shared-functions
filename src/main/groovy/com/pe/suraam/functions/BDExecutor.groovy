@@ -29,8 +29,10 @@ class BDExecutor {
        // def pf = context.getAbsolutePathFile(".")
         //script.echo(pf.getAbsolutePath())
         def workspacePath = script.env.WORKSPACE
-        dir path = "${workspacePath} ${scriptsPath}"
+        def path = "${workspacePath} ${scriptsPath}"
         script.echo("PATH ${path}")
+        def path2 = path.replace("\\", "/")
+        script.echo("PATH2 ${path2}")
        // def scriptDir = getClass().protectionDomain.codeSource.location.path
         //script.echo(scriptDir)
         def config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
