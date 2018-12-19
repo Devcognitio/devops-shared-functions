@@ -47,6 +47,6 @@ class BDExecutor {
                 }
             }
         }
-        script.echo("WORKSPACE ${env.WORKSPACE}")
+        script.echo("WORKSPACE ${script.env.WORKSPACE}")
     }
 }
