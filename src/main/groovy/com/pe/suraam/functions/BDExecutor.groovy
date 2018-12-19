@@ -17,7 +17,7 @@ class BDExecutor {
     }
 
     void executeScripts() {
-        script.withCredentials([usernamePassword(credentialsId: 'SQL_SERVER_CREDENTIALS',
+        this.script.withCredentials([usernamePassword(credentialsId: 'SQL_SERVER_CREDENTIALS',
                 usernameVariable: 'USERNAME',
                 passwordVariable: 'PASSWORD')]) {
             def workspacePath = script.pwd()
