@@ -1,6 +1,12 @@
 import main.groovy.com.pe.suraam.functions.BDExecutor
 
 def call(scriptsPath, configFilePath) {
-    def bdExecutor = new BDExecutor(this, scriptsPath, configFilePath)
-    bdExecutor.executeScripts()
+    withCredentials([usernamePassword(credentialsId: 'SQL_SERVER_CREDENTIALS',
+                                      usernameVariable: 'USERNAME',
+                                      passwordVariable: 'PASSWORD')]) {
+        def bdExecutor = new BDExecutor(this, scriptsPath, configFilePath, $USERNAME, $PASSWORD)
+        bdExecutor.executeScripts()
+    }
+
+
 }

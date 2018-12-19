@@ -9,17 +9,18 @@ class BDExecutor {
     private def script
     private def scriptsPath
     private def configFilePath
+    private def username
+    private def password
 
-    BDExecutor(script, scriptsPath, configFilePath) {
+    BDExecutor(script, scriptsPath, configFilePath, username, password) {
         this.script = script
         this.scriptsPath = scriptsPath
         this.configFilePath = configFilePath
+        this.username = username
+        this.password = password
     }
 
     void executeScripts() {
-        this.script.withCredentials([usernamePassword(credentialsId: 'SQL_SERVER_CREDENTIALS',
-                usernameVariable: 'USERNAME',
-                passwordVariable: 'PASSWORD')]) {
             def workspacePath = script.pwd()
             def dir
             def config
@@ -32,9 +33,8 @@ class BDExecutor {
             script.echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
             if(!config.skipExecution) {
                 dir.eachFileRecurse (FileType.FILES) { file ->
-                    script.sh "cat ${file} | sqlcmd -s localhost -u $USERNAME -p $PASSWORD"
+                    script.sh "cat ${file} | sqlcmd -s localhost -u $username -p $password"
                 }
             }
-        }
     }
 }
