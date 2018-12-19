@@ -22,19 +22,11 @@ class BDExecutor {
 
     void executeScripts() {
         //def workspacePath = script.pwd()
-        //script.sh "pwd"
-        //   def p5 = Paths.get(System.getProperty("user.dir"))
-        // script.echo(p5.toString())
-        //script.echo(p5.toUri().toString())
-       // def pf = context.getAbsolutePathFile(".")
-        //script.echo(pf.getAbsolutePath())
         def workspacePath = script.env.WORKSPACE
         def path = "${workspacePath}${scriptsPath}"
         script.echo("PATH ${path}")
         def path2 = path.replace("\\", "/")
         script.echo("PATH2 ${path2}")
-       // def scriptDir = getClass().protectionDomain.codeSource.location.path
-        //script.echo(scriptDir)
         def config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
         def dir
         try {
@@ -45,10 +37,10 @@ class BDExecutor {
         script.echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
         if (!config.skipExecution) {
             dir.eachFileRecurse(FileType.FILES) { file ->
-                  script.echo("SCRIPT FILE -> ${file.toPath()}")
-                    script.sh "cat ${file.toPath()} | sqlcmd -s localhost -u $username -p $password"
+                script.echo("SCRIPT FILE -> ${file.toPath()}")
+                def pa = file.toPath().toString().replace("\\", "\\\\")
+                script.sh "cat ${file.toPath()} | sqlcmd -s localhost -u $username -p $password"
             }
         }
-        script.echo("WORKSPACE ${script.env.WORKSPACE}")
     }
 }
