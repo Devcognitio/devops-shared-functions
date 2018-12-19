@@ -3,9 +3,7 @@ plugins {
 }
 
 group 'com.pe.suraam'
-version '1.0-BETA'
-
-sourceCompatibility = 1.8
+version = '1.0'
 
 repositories {
     mavenCentral()

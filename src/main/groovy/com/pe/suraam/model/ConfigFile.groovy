@@ -1,4 +1,4 @@
-package com.pe.suraam.model
+package main.groovy.com.pe.suraam.model
 
 class ConfigFile {
 
