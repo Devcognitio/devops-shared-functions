@@ -23,9 +23,6 @@ class BDExecutor {
     void executeScripts() {
         def workspacePath = script.pwd()
         script.sh "pwd"
-        def p5 = Paths.get(System.getProperty("user.dir"))
-        script.echo(p5.toString())
-        script.echo(p5.toUri().toString())
         def config = BDConfigReader.readConfigFile("${workspacePath}" + "${configFilePath}")
         def dir
         try {
@@ -36,7 +33,11 @@ class BDExecutor {
         script.echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
         if (!config.skipExecution) {
             dir.eachFileRecurse(FileType.FILES) { file ->
-                script.sh "cat ${file} | sqlcmd -s localhost -u $username -p $password"
+                if (Files.exists(file.toPath())) {
+                    script.sh "cat ${file} | sqlcmd -s localhost -u $username -p $password"
+                } else {
+                    script.echo("SCRIPT FILE -> BD SCRIPT DOES NOT EXIST" + ${file.toPath()})
+                }
             }
         }
     }
