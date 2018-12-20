@@ -1,4 +1,4 @@
-import main.groovy.com.pe.suraam.functions.BDExecutor
+import com.pe.suraam.functions.BDExecutor
 
 def call(scriptsPath, configFilePath) {
     withCredentials([usernamePassword(credentialsId: 'SQL_SERVER_CREDENTIALS',
@@ -6,7 +6,6 @@ def call(scriptsPath, configFilePath) {
                                       passwordVariable: 'PASSWORD')]) {
         def bdExecutor = new BDExecutor(this, scriptsPath, configFilePath, USERNAME, PASSWORD)
         bdExecutor.executeScripts()
-        echo("WORKSPACE ${env.WORKSPACE}")
     }
 
 }
