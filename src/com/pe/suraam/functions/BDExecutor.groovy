@@ -22,7 +22,6 @@ class BDExecutor {
 
     void executeScripts() {
         def workspacePath = script.pwd()
-        //def workspacePath = script.env.WORKSPACE
         def config = readConfigFile("${workspacePath}${configFilePath}")
         def dir
         try {
