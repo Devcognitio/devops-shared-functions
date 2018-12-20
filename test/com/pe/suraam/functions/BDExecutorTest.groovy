@@ -11,6 +11,8 @@ import static org.hamcrest.Matchers.containsString
 
 class BDExecutorTest extends BasePipelineTest {
 
+    //TODO: Finalizar test unitarios
+
     def script
     def bDExecutor
     @Rule

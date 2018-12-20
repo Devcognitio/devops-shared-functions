@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.pe.suraam.functions.BDExecutorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-12-20T02:08:51" hostname="Jennifers-MacBook-Pro.local" time="0.503">
+<testsuite name="com.pe.suraam.functions.BDExecutorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-12-20T02:16:27" hostname="Jennifers-MacBook-Pro.local" time="0.462">
   <properties/>
-  <testcase name="mustThrowFileNotFoundExceptionIfConfigFilePathDoesNotExist" classname="com.pe.suraam.functions.BDExecutorTest" time="0.503"/>
+  <testcase name="mustThrowFileNotFoundExceptionIfScriptsPathDoesNotExist" classname="com.pe.suraam.functions.BDExecutorTest" time="0.462"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
