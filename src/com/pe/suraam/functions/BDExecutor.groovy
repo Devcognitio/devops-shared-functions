@@ -40,7 +40,7 @@ class BDExecutor {
                 def filePath = file.toPath().toString().replace("\\", "\\\\")
                 filesPaths.plus(filePath)
             }
-            filesPaths.sort().each{
+            filesPaths.sort().each{ filePath -> 
                 script.sh "cat ${filePath} | sqlcmd -s $host -o $port -u $username -p $password"
             }
         }
