@@ -39,6 +39,9 @@ class BDExecutor {
             dir.eachFileRecurse(FileType.FILES) { file ->
                 list << file
             }
+            list.each{ file ->
+                script.echo "filePath: ${file.toPath().toString()}"
+            }
             list.sort{file -> file.getName()}.each{ file ->
                 def filePath = file.toPath().toString().replace("\\", "\\\\")
                 script.echo "filePath: $filePath"
