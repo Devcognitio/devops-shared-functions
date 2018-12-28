@@ -34,13 +34,14 @@ class BDExecutor {
             throw new FileNotFoundException("BD Scripts path is incorrect, please provide a correct path. ", exc.getMessage())
         }
         script.echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
+        script.echo("Rute: ${workspacePath}${scriptsPath}")
         if (!config.skipExecution) {
             def list = []
             dir.eachFileRecurse(FileType.FILES) { file ->
                 list << file
             }
             list.each{ file ->
-                script.echo "filePath: ${file.toPath().toString()}"
+                script.echo "filePath***: ${file.toPath().toString()}"
             }
             list.sort{file -> file.getName()}.each{ file ->
                 def filePath = file.toPath().toString().replace("\\", "\\\\")
