@@ -38,6 +38,7 @@ class BDExecutor {
         if (!config.skipExecution) {
             def list = []
             dir.eachFileRecurse(FileType.FILES) { file ->
+                script.echo "LlenandoListaCon: ${file.toPath().toString()}"
                 list << file
             }
             list.each{ file ->
