@@ -11,13 +11,17 @@ class BDExecutor {
     private def configFilePath
     private def username
     private def password
+    private def host
+    private def port
 
-    BDExecutor(script, scriptsPath, configFilePath, username, password) {
+    BDExecutor(script, scriptsPath, configFilePath, username, password, dbHost, dbPort) {
         this.script = script
         this.scriptsPath = scriptsPath
         this.configFilePath = configFilePath
         this.username = username
         this.password = password
+        this.host = dbHost
+        this.port = dbPort
     }
 
     void executeScripts() {
@@ -33,7 +37,7 @@ class BDExecutor {
         if (!config.skipExecution) {
             dir.eachFileRecurse(FileType.FILES) { file ->
                 def filePath = file.toPath().toString().replace("\\", "\\\\")
-                script.sh "cat ${filePath} | sqlcmd -s localhost -u $username -p $password"
+                script.sh "cat ${filePath} | sqlcmd -s $host -o $port -u $username -p $password"
             }
         }
     }
