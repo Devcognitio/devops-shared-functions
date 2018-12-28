@@ -24,7 +24,6 @@ class BDExecutor {
         this.port = dbPort
     }
 
-    @NonCPS
     void executeScripts() {
         def workspacePath = script.pwd()
         def config = readConfigFile("${workspacePath}${configFilePath}")
@@ -38,7 +37,7 @@ class BDExecutor {
         script.echo("Rute: ${workspacePath}${scriptsPath}")
         if (!config.skipExecution) {
             def list = []
-            dir.eachFileRecurse(FileType.FILES) { file ->
+            dir.eachFile { file ->
                 script.echo "LlenandoListaCon: ${file.toPath().toString()}"
                 list << file
             }
