@@ -35,8 +35,12 @@ class BDExecutor {
         }
         script.echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
         if (!config.skipExecution) {
-            dir.listFiles()?.sort{ it.name }?.eachFile { file ->
+            def filesPaths = []
+            dir.eachFileRecurse(FileType.FILES) { file ->
                 def filePath = file.toPath().toString().replace("\\", "\\\\")
+                filesPaths.plus(filePath)
+            }
+            filesPaths.sort().each{
                 script.sh "cat ${filePath} | sqlcmd -s $host -o $port -u $username -p $password"
             }
         }
