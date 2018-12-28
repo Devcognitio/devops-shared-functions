@@ -24,6 +24,7 @@ class BDExecutor {
         this.port = dbPort
     }
 
+    @NonCPS
     void executeScripts() {
         def workspacePath = script.pwd()
         def config = readConfigFile("${workspacePath}${configFilePath}")
