@@ -39,8 +39,9 @@ class BDExecutor {
             dir.eachFileRecurse(FileType.FILES) { file ->
                 list << file
             }
-            list.sort{file -> file.getName()}.reverse().each{ file ->
+            list.sort{file -> file.getName()}.each{ file ->
                 def filePath = file.toPath().toString().replace("\\", "\\\\")
+                script.echo "filePath: $filePath"
                 script.sh "cat ${filePath} | sqlcmd -s $host -o $port -u $username -p $password"
             }
         }
