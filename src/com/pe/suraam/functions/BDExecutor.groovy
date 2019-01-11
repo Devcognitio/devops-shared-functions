@@ -27,36 +27,29 @@ class BDExecutor {
     void executeScripts() {
         def workspacePath = script.pwd()
         def config = readConfigFile("${workspacePath}${configFilePath}")
-        def dir
-        try {
-            //dir = new File("${workspacePath}${scriptsPath}")
-        } catch (FileNotFoundException exc) {
-            throw new FileNotFoundException("BD Scripts path is incorrect, please provide a correct path. ", exc.getMessage())
-        }
+        
         script.echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
         script.echo("Rute: ${workspacePath}${scriptsPath}")
         if (!config.skipExecution) {
-
-            def  FILES_LIST = script.sh (script: "ls '${workspacePath}${scriptsPath}'", returnStdout: true).trim()
-            script.echo "FILES_LIST : ${FILES_LIST}"
-            for(String filePath : FILES_LIST.split("\\r?\\n").sort()){ 
-                script.echo "Path: >>>${workspacePath}${scriptsPath}/${filePath}<<<" 
-                script.sh "cat ${workspacePath}${scriptsPath}/${filePath} | sqlcmd -s $host -o $port -u $username -p $password"    
+            def  filesList = getFilesList("${workspacePath}${scriptsPath}")
+            script.echo "filesList : ${filesList}"
+            if (filesList.isEmpty()){
+                throw new FileNotFoundException("BD Scripts path is incorrect, please provide a correct path. ", exc.getMessage())
             }
-
-            // def list = []
-            // dir.eachFile { file ->
-            //     script.echo "LlenandoListaCon: ${file.toPath().toString()}"
-            //     list << file
-            // }
-            // list.each{ file ->
-            //     script.echo "filePath***: ${file.toPath().toString()}"
-            // }
-            // list.sort{file -> file.getName()}.each{ file ->
-            //     def filePath = file.toPath().toString().replace("\\", "\\\\")
-            //     script.echo "filePath: $filePath"
-            //     script.sh "cat ${filePath} | sqlcmd -s $host -o $port -u $username -p $password"
-            // }
+            for(String file : filesList.sort()){ 
+                script.echo "Path: >>>${workspacePath}${scriptsPath}/${file}<<<" 
+                script.sh "cat ${workspacePath}${scriptsPath}/${file} | sqlcmd -s $host -o $port -u $username -p $password"    
+            }
         }
+    }
+
+    def getFilesList(path){
+        def  filesList
+        if (isUnix()) {
+            filesList = script.sh (script: "ls '${path}'", returnStdout: true).trim().split("\\r?\\n")
+        }else{
+            filesList = bat(script: 'dir /s /b /a:-D "'+path+'" 2>nul').trim().tokenize('\r\n')
+        }
+        return filesList
     }
 }
