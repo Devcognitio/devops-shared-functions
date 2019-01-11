@@ -29,26 +29,34 @@ class BDExecutor {
         def config = readConfigFile("${workspacePath}${configFilePath}")
         def dir
         try {
-            dir = new File("${workspacePath}${scriptsPath}")
+            //dir = new File("${workspacePath}${scriptsPath}")
         } catch (FileNotFoundException exc) {
             throw new FileNotFoundException("BD Scripts path is incorrect, please provide a correct path. ", exc.getMessage())
         }
         script.echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
         script.echo("Rute: ${workspacePath}${scriptsPath}")
         if (!config.skipExecution) {
-            def list = []
-            dir.eachFile { file ->
-                script.echo "LlenandoListaCon: ${file.toPath().toString()}"
-                list << file
+
+            def  FILES_LIST = sh (script: "ls '${workspacePath}${scriptsPath}'", returnStdout: true).trim()
+            script.echo "FILES_LIST : ${FILES_LIST}"
+            for(String filePath : FILES_LIST.split("\\r?\\n").sort()){ 
+                script.echo "Path: >>>${filePath}<<<" 
+                script.sh "cat ${filePath} | sqlcmd -s $host -o $port -u $username -p $password"    
             }
-            list.each{ file ->
-                script.echo "filePath***: ${file.toPath().toString()}"
-            }
-            list.sort{file -> file.getName()}.each{ file ->
-                def filePath = file.toPath().toString().replace("\\", "\\\\")
-                script.echo "filePath: $filePath"
-                script.sh "cat ${filePath} | sqlcmd -s $host -o $port -u $username -p $password"
-            }
+
+            // def list = []
+            // dir.eachFile { file ->
+            //     script.echo "LlenandoListaCon: ${file.toPath().toString()}"
+            //     list << file
+            // }
+            // list.each{ file ->
+            //     script.echo "filePath***: ${file.toPath().toString()}"
+            // }
+            // list.sort{file -> file.getName()}.each{ file ->
+            //     def filePath = file.toPath().toString().replace("\\", "\\\\")
+            //     script.echo "filePath: $filePath"
+            //     script.sh "cat ${filePath} | sqlcmd -s $host -o $port -u $username -p $password"
+            // }
         }
     }
 }
