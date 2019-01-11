@@ -32,7 +32,7 @@ class BDExecutor {
         script.echo("Rute: ${workspacePath}${scriptsPath}")
         if (!config.skipExecution) {
             def  filesList = getFilesList("${workspacePath}${scriptsPath}")
-            script.echo "filesList : ${filesList}"
+            script.echo "filesList : ${filesList}, class: ${filesList.getClass()}"
             if (filesList.isEmpty()){
                 throw new FileNotFoundException("BD Scripts path is incorrect, please provide a correct path. ", exc.getMessage())
             }
@@ -44,7 +44,7 @@ class BDExecutor {
     }
 
     def getFilesList(path){
-        def  filesList
+        def  filesList = []
         if (script.isUnix()) {
             filesList = script.sh (script: "ls '${path}'", returnStdout: true).trim().split("\\r?\\n")
         }else{
