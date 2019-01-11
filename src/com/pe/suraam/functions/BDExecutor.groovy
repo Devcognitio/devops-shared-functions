@@ -37,7 +37,7 @@ class BDExecutor {
         script.echo("Rute: ${workspacePath}${scriptsPath}")
         if (!config.skipExecution) {
 
-            def  FILES_LIST = sh (script: "ls '${workspacePath}${scriptsPath}'", returnStdout: true).trim()
+            def  FILES_LIST = script.sh (script: "ls '${workspacePath}${scriptsPath}'", returnStdout: true).trim()
             script.echo "FILES_LIST : ${FILES_LIST}"
             for(String filePath : FILES_LIST.split("\\r?\\n").sort()){ 
                 script.echo "Path: >>>${filePath}<<<" 
