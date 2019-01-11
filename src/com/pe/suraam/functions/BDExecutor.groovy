@@ -40,8 +40,8 @@ class BDExecutor {
             def  FILES_LIST = script.sh (script: "ls '${workspacePath}${scriptsPath}'", returnStdout: true).trim()
             script.echo "FILES_LIST : ${FILES_LIST}"
             for(String filePath : FILES_LIST.split("\\r?\\n").sort()){ 
-                script.echo "Path: >>>${filePath}<<<" 
-                script.sh "cat ${filePath} | sqlcmd -s $host -o $port -u $username -p $password"    
+                script.echo "Path: >>>${workspacePath}${scriptsPath}/${filePath}<<<" 
+                script.sh "cat ${workspacePath}${scriptsPath}/${filePath} | sqlcmd -s $host -o $port -u $username -p $password"    
             }
 
             // def list = []
