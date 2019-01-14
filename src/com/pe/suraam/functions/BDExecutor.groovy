@@ -1,7 +1,5 @@
 package com.pe.suraam.functions
 
-import groovy.io.FileType
-
 import static com.pe.suraam.functions.BDConfigReader.*
 
 class BDExecutor {
@@ -27,14 +25,13 @@ class BDExecutor {
     void executeScripts() {
         def workspacePath = script.pwd()
         def config = readConfigFile("${workspacePath}${configFilePath}")
-        
         script.echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
         script.echo("Rute: ${workspacePath}${scriptsPath}")
         if (!config.skipExecution) {
             List<String>  filesList = getFilesList("${workspacePath}${scriptsPath}")
             script.echo "filesList : ${filesList}, class: ${filesList.getClass()}"
             if (filesList.isEmpty()){
-                throw new FileNotFoundException("BD Scripts path is incorrect, please provide a correct path. ", exc.getMessage())
+                throw new FileNotFoundException("BD Scripts path is incorrect, please provide a correct path. ")
             }
             for(String file : filesList.sort()){ 
                 script.echo "Path: >>>${workspacePath}${scriptsPath}/${file}<<<" 
@@ -48,7 +45,7 @@ class BDExecutor {
         if (script.isUnix()) {
             filesList = script.sh (script: "ls '${path}'", returnStdout: true).trim().split("\\r?\\n")
         }else{
-            filesList = bat(script: 'dir /s /b /a:-D "'+path+'" 2>nul').trim().tokenize('\r\n')
+            filesList = script.bat(script: 'dir /s /b /a:-D "'+path+'" 2>nul').trim().tokenize('\r\n')
         }
         return filesList
     }

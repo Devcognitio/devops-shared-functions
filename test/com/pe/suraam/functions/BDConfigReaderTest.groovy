@@ -15,7 +15,7 @@ class BDConfigReaderTest {
     @Test
     void mustThrowFileNotFoundExceptionIfConfigFilePathDoesNotExist() {
         thrown.expect(FileNotFoundException.class)
-        thrown.expectMessage(containsString("non/existing/path (No such file or directory)"))
+        thrown.expectMessage(containsString("non/existing/path (No"))
         BDConfigReader.readConfigFile("non/existing/path")
     }
 
