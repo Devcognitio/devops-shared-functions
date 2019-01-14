@@ -46,7 +46,7 @@ docker start my-sql-server my-jenkins
 docker stop my-sql-server my-jenkins
 
 ```
-NOTA: Tener en cuenta que el comando que `docker run` para jenkins mostrará en consola un código, este código debe ser copiado para usarlo cuando se requiera subir por primer vez jenkins.
+**NOTA:** Tener en cuenta que el comando que `docker run` para jenkins mostrará en consola un código, este código debe ser copiado para usarlo cuando se requiera subir por primer vez jenkins.
 Cuando se use por primer vez y se pretenda crear el usuario y constraseña de jenkins, se recomienda usar `admin/admin123.`.
 
 Luego prueba que todo está bien:
@@ -60,7 +60,7 @@ sqlcmd -s 127.0.0.1 -u sa -p admin123. "select GETDATE()"
 
 ```
 Para probar jenkins ingresas a la ruta: 
-(localhost:8080)[localhost:8080]
+[localhost:8080](https://localhost:8080)
 
 ### Otras configuraciones en jenkins para que funcione OK la librería
 1. Configurar la librería compartida: Ir a Jenkins/Administrar Jenkins/Configurar el Sistema/		
@@ -79,7 +79,7 @@ url de la librería: `https://github.com/Devcognitio/devops-shared-functions`
 
 3. Ir a Jenkins y crear un nuevo pipeline usando repositorio git, para esto se creó un proyecto de ejemplo que tiene scripts sql que pueden ser ejecutados:
 
-url del proyecto: ``
+url del proyecto: `https://github.com/Devcognitio/jenkins-sql-example.git`
 
 4. Ejecutar el proyecto y verificar que se obtengan buenas salidas para la ejecución de los scripts:
 
@@ -120,3 +120,6 @@ Path: >>>/var/jenkins_home/workspace/bd_executir/bd/scripts/prueba5.sql<<<
 [Pipeline] End of Pipeline
 Finished: SUCCESS
 ```
+
+**NOTA:** tener en cuenta que si no funciona OK, puede ser porque el contenedor levantó en otra IP diferente a la que se tiene en el `Jenkinsfile` por lo tanto debe cambiarse dentro del contenedor my-jenkins para que el link se creé con una IP específica, o cambiar el `Jenkinsfile` por la IP que se vea en el archivo `/etc/hosts` que se encuentra en el contenedor my-jenkins.
+Ver para mas información: [docker links](https://docs.docker.com/network/links/)
