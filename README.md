@@ -60,7 +60,7 @@ sqlcmd -s 127.0.0.1 -u sa -p admin123. "select GETDATE()"
 
 ```
 Para probar jenkins ingresas a la ruta: 
-[localhost:8080](https://localhost:8080)
+[localhost:8080](localhost:8080)
 
 ### Otras configuraciones en jenkins para que funcione OK la librería
 1. Configurar la librería compartida: Ir a Jenkins/Administrar Jenkins/Configurar el Sistema/		
