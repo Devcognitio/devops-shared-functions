@@ -124,7 +124,7 @@ class BDExecutorTest extends BasePipelineTest {
     @Test
     void mustCallBatInGetFilesListIfSOIsNotUnix(){
         helper.registerAllowedMethod("isUnix", []) {return false}
-        helper.registerAllowedMethod("bat", [Map.class]) {c -> return "test.sql"}
+        helper.registerAllowedMethod("bat", [String.class]) {c -> return "test.sql"}
         def executor = new BDExecutor(script, scriptsPath, configFilePath, username, password, host, port)
 
         def resultList = executor.getFilesList("/test/resources")

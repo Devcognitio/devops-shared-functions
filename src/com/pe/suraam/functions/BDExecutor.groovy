@@ -45,7 +45,7 @@ class BDExecutor {
         if (script.isUnix()) {
             filesList = script.sh (script: "ls '${path}'", returnStdout: true).trim().split("\\r?\\n")
         }else{
-            filesList = script.bat(script: 'dir /s /b /a:-D "'+path+'" 2>nul').trim().tokenize('\r\n')
+            filesList = script.bat("dir /s /b /a:-D ${path} 2>nul").trim().tokenize('\r\n')
         }
         return filesList
     }
