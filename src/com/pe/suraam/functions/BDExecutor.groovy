@@ -28,14 +28,14 @@ class BDExecutor {
         script.echo("CONFIG FILE -> SKIP BD SCRIPTS EXECUTION: ${config.skipExecution}")
         script.echo("Rute: ${workspacePath}${scriptsPath}")
         if (!config.skipExecution) {
-            List<String>  filesList = getFilesList("${workspacePath}${scriptsPath}")
-            script.echo "filesList : ${filesList}, class: ${filesList.getClass()}"
-            if (filesList.isEmpty()){
+            List<String>  filesPathList = getFilesList("${workspacePath}${scriptsPath}")
+            script.echo "filesPathList : ${filesPathList}, class: ${filesPathList.getClass()}"
+            if (filesPathList.isEmpty()){
                 throw new FileNotFoundException("BD Scripts path is incorrect, please provide a correct path. ")
             }
-            for(String file : filesList.sort()){ 
-                script.echo "Path: >>>${scriptsPath}/${file}<<<"
-                script.sh "cat ${scriptsPath}/${file} | sqlcmd -s $host -o $port -u $username -p $password"
+            for(String filePath : filesPathList.sort()){
+                script.echo "Path: >>>${filePath}<<<"
+                script.sh "cat ${filePath} | sqlcmd -s $host -o $port -u $username -p $password"
             }
         }
     }
