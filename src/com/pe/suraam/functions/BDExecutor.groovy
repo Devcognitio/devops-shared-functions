@@ -34,8 +34,7 @@ class BDExecutor {
                 throw new FileNotFoundException("BD Scripts path is incorrect, please provide a correct path. ")
             }
             for(String filePath : filesPathList.sort()){
-                script.echo "Path: >>>${filePath}<<<"
-                script.sh "cat ${filePath} | sqlcmd -s $host -o $port -u $username -p $password"
+                executeScript(filePath)
             }
         }
     }
@@ -50,5 +49,15 @@ class BDExecutor {
             }
         }
         return filesList
+    }
+
+    def executeScript(filePath){
+        script.echo "Path: >>>${filePath}<<<"
+        if (script.isUnix()) {
+            script.sh "cat ${filePath} | sqlcmd -s $host -o $port -u $username -p $password"
+        }else{
+            script.bat "sqlcmd -s $host -o $port -u $username -p $password -i \"${filePath}\""
+        }
+
     }
 }

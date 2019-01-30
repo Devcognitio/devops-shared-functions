@@ -52,8 +52,9 @@ class BDExecutorTest extends BasePipelineTest {
     }
 
     @Test
-    void mustExecuteAnDBScriptIfConfigSkipExecutionIsFalse(){
+    void mustExecuteAnDBScriptWithShIfConfigSkipExecutionIsFalseAndIsUnix(){
         BDConfigReader.metaClass.static.readConfigFile = {str -> return [skipExecution:false]}
+        helper.registerAllowedMethod("isUnix", []) {return true}
         helper.registerAllowedMethod("sh", [String.class]) {str -> println("Script OK")}
         helper.registerAllowedMethod("echo", [String.class]) {str -> println(str)}
         scriptsPath = "/test/resources"
@@ -64,6 +65,26 @@ class BDExecutorTest extends BasePipelineTest {
 
         assertTrue(helper.callStack.findAll { call ->
             call.methodName == "sh"
+        }.any { call ->
+            callArgsToString(call).contains("sqlcmd -s localhost -o 1433 -u usernameTest -p passwordTest")
+        })
+        assertJobStatusSuccess()
+    }
+
+    @Test
+    void mustExecuteAnDBScriptWithBatIfConfigSkipExecutionIsFalseAndIsNotUnix(){
+        BDConfigReader.metaClass.static.readConfigFile = {str -> return [skipExecution:false]}
+        helper.registerAllowedMethod("isUnix", []) {return false}
+        helper.registerAllowedMethod("bat", [String.class]) {str -> println("Script OK")}
+        helper.registerAllowedMethod("echo", [String.class]) {str -> println(str)}
+        scriptsPath = "/test/resources"
+        def executor = new BDExecutor(script, scriptsPath, configFilePath, username, password, host, port)
+        executor.metaClass.getFilesList{ str -> ["test.sql"] }
+
+        executor.executeScripts()
+
+        assertTrue(helper.callStack.findAll { call ->
+            call.methodName == "bat"
         }.any { call ->
             callArgsToString(call).contains("sqlcmd -s localhost -o 1433 -u usernameTest -p passwordTest")
         })
