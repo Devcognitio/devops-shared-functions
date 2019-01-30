@@ -46,7 +46,7 @@ class BDExecutor {
             filesList = script.sh (script: "ls -d -1 $path/**.sql", returnStdout: true).trim().split("\\r?\\n")
         }else{
             script.dir(path){
-                filesList = script.bat(returnStdout: true, script: "dir /s /b *.sql").trim().tokenize('\r\n')
+                filesList = script.bat(returnStdout: true, script: "dir /s /b *.sql").trim().tokenize('\r\n').tail()
             }
         }
         return filesList
