@@ -107,7 +107,7 @@ class BDExecutorTest extends BasePipelineTest {
     @Test
     void mustCallShInGetFilesListIfSOIsUnix(){
         helper.registerAllowedMethod("isUnix", []) {return true}
-        helper.registerAllowedMethod("sh", [Map.class]) { c -> return "test.sql"}
+        helper.registerAllowedMethod("sh", [Map.class]) { c -> return "/test/resources/test.sql"}
         def executor = new BDExecutor(script, scriptsPath, configFilePath, username, password, host, port)
 
         def resultList = executor.getFilesList("/test/resources")
@@ -118,13 +118,13 @@ class BDExecutorTest extends BasePipelineTest {
             callArgsToString(call).contains("ls")
         })
 
-        assertThat(resultList, contains("test.sql"))
+        assertThat(resultList, contains("/test/resources/test.sql"))
     }
 
     @Test
     void mustCallBatInGetFilesListIfSOIsNotUnix(){
         helper.registerAllowedMethod("isUnix", []) {return false}
-        helper.registerAllowedMethod("bat", [String.class]) {c -> return "test.sql"}
+        helper.registerAllowedMethod("bat", [Map.class]) {c -> return "/test/resources/test.sql"}
         def executor = new BDExecutor(script, scriptsPath, configFilePath, username, password, host, port)
 
         def resultList = executor.getFilesList("/test/resources")
@@ -135,7 +135,7 @@ class BDExecutorTest extends BasePipelineTest {
             callArgsToString(call).contains("dir")
         })
 
-        assertThat(resultList, contains("test.sql"))
+        assertThat(resultList, contains("/test/resources/test.sql"))
     }
 
 
